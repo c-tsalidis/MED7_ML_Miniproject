@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelUserStore">
-    <attachedFolders />
+    <attachedFolders>
+      <Path>../../ml-agents/com.unity.ml-agents</Path>
+      <Path>../../ml-agents/com.unity.ml-agents.extensions</Path>
+    </attachedFolders>
     <explicitIncludes>
       <Path>Library/PackageCache/com.unity.barracuda@1.0.4</Path>
       <Path>Library/PackageCache/com.unity.barracuda@2.3.1-preview</Path>

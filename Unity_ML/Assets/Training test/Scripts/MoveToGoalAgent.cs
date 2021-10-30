@@ -33,6 +33,7 @@ public class MoveToGoalAgent : Agent {
     }
 
     public override void OnActionReceived(ActionBuffers actions) {
+        print(actions.ContinuousActions[0]);
         float moveX = actions.ContinuousActions[0]; // x axis
         float moveZ = actions.ContinuousActions[1]; // z axis
         transform.localPosition += new Vector3(moveX, 0, moveZ) * (Time.deltaTime * moveSpeed);

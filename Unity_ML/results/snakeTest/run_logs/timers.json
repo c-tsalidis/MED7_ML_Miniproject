@@ -1,0 +1,73 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1635515626",
+        "python_version": "3.7.4 (default, Aug 13 2019, 15:17:50) \n[Clang 4.0.1 (tags/RELEASE_401/final)]",
+        "command_line_arguments": "/Users/ctsalidis/Desktop/University/Medialogy/MED7/Machine Learning/Miniproject/MED7_ML_Miniproject/Unity_ML/venv/bin/mlagents-learn config/snake.yaml --run-id=snakeTest",
+        "mlagents_version": "0.27.0",
+        "mlagents_envs_version": "0.27.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.8.1",
+        "numpy_version": "1.21.3",
+        "end_time_seconds": "1635515652"
+    },
+    "total": 26.013428182,
+    "count": 1,
+    "self": 0.005083043999999148,
+    "children": {
+        "run_training.setup": {
+            "total": 0.029841210999999923,
+            "count": 1,
+            "self": 0.029841210999999923
+        },
+        "TrainerController.start_learning": {
+            "total": 25.978503927,
+            "count": 1,
+            "self": 0.00030977099999773827,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 15.561792812000002,
+                    "count": 1,
+                    "self": 15.561792812000002
+                },
+                "TrainerController.advance": {
+                    "total": 10.208218467999998,
+                    "count": 1,
+                    "self": 2.3075999997956842e-05,
+                    "children": {
+                        "env_step": {
+                            "total": 10.208195392,
+                            "count": 1,
+                            "self": 10.208180866,
+                            "children": {
+                                "SubprocessEnvManager._take_step": {
+                                    "total": 1.4526000001069406e-05,
+                                    "count": 1,
+                                    "self": 1.4526000001069406e-05
+                                }
+                            }
+                        }
+                    }
+                },
+                "trainer_threads": {
+                    "total": 1.213000000888087e-06,
+                    "count": 1,
+                    "self": 1.213000000888087e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 0.2081816630000013,
+                    "count": 1,
+                    "self": 0.0005717930000024296,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.20760986999999886,
+                            "count": 1,
+                            "self": 0.20760986999999886
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
