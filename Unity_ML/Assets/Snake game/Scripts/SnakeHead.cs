@@ -17,11 +17,47 @@ namespace Snake_game.Scripts {
         public override void OnEpisodeBegin() => grid.SetFoodPosition();
 
         // public override void OnActionReceived(ActionBuffers actions) => grid.SetSnakeHeadPosition(actions.DiscreteActions[0]); // set the direction of the snake
-        public override void OnActionReceived(ActionBuffers actions) => direction = actions.DiscreteActions[0]; // set the direction of the snake
+        
+        // set the direction of the snake
+        public override void OnActionReceived(ActionBuffers actions) {
+            direction = actions.DiscreteActions[0];
+            if(grid.isTraining) grid.SetSnakeHeadPosition(actions.DiscreteActions[0]); // set the direction of the snake
+        }
 
         public override void CollectObservations(VectorSensor sensor) {
-            sensor.AddObservation(transform.localPosition);
-            sensor.AddObservation(_food.transform.localPosition);
+            // add observation to x and z pos of snake
+            var headPos = transform.localPosition;
+            sensor.AddObservation(headPos.x);
+            sensor.AddObservation(headPos.z);
+            
+            // add observation to x and z pos of food
+            var foodPos = _food.transform.localPosition;
+            sensor.AddObservation(foodPos.x);
+            sensor.AddObservation(foodPos.z);
+            
+            // add observation to each body part
+            for (int i = 0; i < grid.cubes.Length; i++) {
+                if (grid._bodyparts.Count-1 >= i) {
+                    var pos = grid._bodyparts[i].transform.localPosition;
+                    sensor.AddObservation(pos.x);
+                    sensor.AddObservation(pos.z);
+                }
+                else {
+                    sensor.AddObservation(0f); // x
+                    sensor.AddObservation(0f); // z
+                }
+            }
+
+            /*
+            
+            foreach (var bp in grid._bodyparts) {
+                sensor.AddObservation(bp.transform.localPosition);
+            }
+
+            foreach (var cube in grid.cubes) {
+                sensor.AddObservation(cube.transform.localPosition);
+            }
+            */
         }
 
         public override void Heuristic(in ActionBuffers actionsOut) {
