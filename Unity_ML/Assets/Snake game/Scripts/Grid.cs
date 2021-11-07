@@ -91,20 +91,21 @@ namespace Snake_game.Scripts {
 
             // map the indexes to get the correct cubIndex
             cubeIndex = xIndex + zIndex * gridEdgeSize; // cubeIndex = x + y * gridWidth;
-            snakeHead.transform.localPosition = cubes[cubeIndex].transform.localPosition;
+            snakeHead.transform.localPosition = cubes[cubeIndex].transform.localPosition + Vector3.up;
 
             if (_bodyparts.Count > 0) {
                 for (int i = _bodyparts.Count - 1; i > 0; i--) {
                     _bodyparts[i].transform.localPosition = _bodyparts[i - 1].transform.localPosition;
                     _bodyparts[i].cubeIndex = _bodyparts[i - 1].cubeIndex;
                 }
-                _bodyparts[0].transform.localPosition = cubes[snakeHead.previousCubeIndex].transform.localPosition;
+                _bodyparts[0].transform.localPosition = cubes[snakeHead.previousCubeIndex].transform.localPosition  + Vector3.up;
                 _bodyparts[0].cubeIndex = snakeHead.previousCubeIndex;
             }
             
             // if the snake head is at the same as the food, then that's a score
             if (food.gridIndex == cubeIndex) {
                 var bodyPart = Instantiate(bodyPartPrefab, originalPosition, Quaternion.identity);
+                bodyPart.transform.SetParent(transform);
                 int pos = 0;
                 if (_bodyparts.Count > 0) {
                     pos = _bodyparts[_bodyparts.Count - 1].cubeIndex;
@@ -114,7 +115,7 @@ namespace Snake_game.Scripts {
                     pos = snakeHead.previousCubeIndex;
                     bodyPart.GetComponent<GridCube>().cubeIndex = snakeHead.previousCubeIndex;
                 }
-                bodyPart.transform.localPosition = cubes[pos].transform.localPosition;
+                bodyPart.transform.localPosition = cubes[pos].transform.localPosition + Vector3.up;
                 _bodyparts.Add(bodyPart.GetComponent<GridCube>());
                 snakeHead.Score();
             }

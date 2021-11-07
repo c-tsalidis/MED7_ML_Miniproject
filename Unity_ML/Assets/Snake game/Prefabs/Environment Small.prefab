@@ -2628,12 +2628,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3566021994372542206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Record: 0
+  Record: 1
   NumStepsToRecord: 0
   DemonstrationName: SnakeImitation
   DemonstrationDirectory: Demos
@@ -2963,7 +2963,7 @@ MonoBehaviour:
   snakeHead: {fileID: 3566021994372542192}
   food: {fileID: 3566021995430386090}
   bodyPartPrefab: {fileID: 7598522206606828966, guid: 30a35ad614a634186a7183396690934d, type: 3}
-  timeBetweenFrames: 0.4
+  timeBetweenFrames: 0.5
   snakeMaterial: {fileID: 2100000, guid: 6a1d567ee188d47efb11cf30afc7b779, type: 2}
   gridCubeMaterial: {fileID: 2100000, guid: 4c4288ef46b6f4184b08d63f0d183413, type: 2}
   xIndex: 0
