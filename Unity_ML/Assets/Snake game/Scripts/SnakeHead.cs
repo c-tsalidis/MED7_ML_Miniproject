@@ -70,7 +70,7 @@ namespace Snake_game.Scripts {
 
         public void Score() {
             score++;
-            SetReward(1);
+            SetReward(grid._bodyparts.Count);
             EndEpisode();
         }
 
