@@ -44,12 +44,12 @@ namespace Snake_game.Scripts {
                     sensor.AddObservation(pos.z);
                 }
                 else {
-                    sensor.AddObservation(0f); // x
-                    sensor.AddObservation(0f); // z
+                    // sensor.AddObservation(0f); // x
+                    // sensor.AddObservation(0f); // z
                 }
             }
 
-            AddReward( -1f / MaxStep); // punish to try to make the snake approach move towards the food faster
+            // AddReward( -1f / MaxStep); // punish to try to make the snake approach move towards the food faster
         }
 
         public override void Heuristic(in ActionBuffers actionsOut) {
@@ -67,9 +67,12 @@ namespace Snake_game.Scripts {
         }
 
         public void Punish() {
+            // if the snake happens to find itself in the situation where the food and body part are in the same spot,
+            // then it should avoid its body more than it should go for the food --> Therefore:
+            // we need to set the punish slightly higher than the reward
             score = 0;
             var count = grid._bodyparts.Count; // snake body parts
-            AddReward(-count);
+            AddReward(-count-1);
             
             // AddReward(-1f / (count+1));
             
@@ -77,10 +80,14 @@ namespace Snake_game.Scripts {
             // else AddReward(1f);
             EndEpisode();
         }
-        
+
         private void PunishSeverely() {
             AddReward(-2*grid._bodyparts.Count);
             EndEpisode();
+        }
+
+        public void WonGame() {
+            Score();
         }
 
         private void OnTriggerEnter(Collider other) {

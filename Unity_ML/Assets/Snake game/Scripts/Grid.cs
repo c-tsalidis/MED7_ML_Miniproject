@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,16 +49,38 @@ namespace Snake_game.Scripts {
             }
         }
 
+        private void Update() {
+            foreach (var c in cubes) {
+                Debug.DrawRay(c.transform.localPosition, c.transform.up * 10, Color.green);
+            }
+        }
+
         public void SetFoodPosition() {
             bool foundFreeSpotForFood = false;
             while (!foundFreeSpotForFood) {
+                if (_bodyparts.Count == cubes.Length - 1) {
+                    foundFreeSpotForFood = true; // won the game
+                    
+                }
                 var randomCubeIndex = Random.Range(0, cubes.Length);
                 var cube = cubes[randomCubeIndex];
-                foreach (var b in _bodyparts.Where(b => cube.cubeIndex == b.cubeIndex)) break;
+                    /*
+                // if a ray going from the random cube upwards doesn't hit anything, then it means it's a free spot 
+                if (!Physics.Raycast(cube.transform.localPosition, cube.transform.up * 10)) {
+                    food.transform.localPosition = cube.transform.localPosition; 
+                    food.gridIndex = randomCubeIndex; 
+                    foundFreeSpotForFood = true;
+                }
+                */
                 
-                food.transform.localPosition = cube.transform.localPosition; 
-                food.gridIndex = randomCubeIndex; 
-                foundFreeSpotForFood = true;
+                int counter = 0;
+                foreach (var b in _bodyparts.Where(b => cube.cubeIndex == b.cubeIndex)) { counter++; break; }
+                if (counter == 0) { // if there is no body part in the new random cube index, then spawn the food
+                    food.transform.localPosition = cube.transform.localPosition; 
+                    food.gridIndex = randomCubeIndex; 
+                    foundFreeSpotForFood = true;
+                }
+                
             }
         }
 

@@ -837,6 +837,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment Small (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 3566021994592304668, guid: 2a57faf897ea5412798322813c540572, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3566021994592304671, guid: 2a57faf897ea5412798322813c540572, type: 3}
       propertyPath: m_RootOrder
       value: 33
@@ -2868,6 +2872,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment Small (36)
       objectReference: {fileID: 0}
+    - target: {fileID: 3566021994592304668, guid: 2a57faf897ea5412798322813c540572, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3566021994592304671, guid: 2a57faf897ea5412798322813c540572, type: 3}
       propertyPath: m_RootOrder
       value: 49
@@ -3596,6 +3604,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment Small (63)
       objectReference: {fileID: 0}
+    - target: {fileID: 3566021994592304668, guid: 2a57faf897ea5412798322813c540572, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3566021994592304671, guid: 2a57faf897ea5412798322813c540572, type: 3}
       propertyPath: m_RootOrder
       value: 50
@@ -4137,6 +4149,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3566021994372542195, guid: 2a57faf897ea5412798322813c540572, type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3566021994592304668, guid: 2a57faf897ea5412798322813c540572, type: 3}
       propertyPath: m_Name
       value: Environment Small
