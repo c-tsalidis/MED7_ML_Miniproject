@@ -2,6 +2,7 @@ using System;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Snake_game.Scripts {
@@ -48,16 +49,7 @@ namespace Snake_game.Scripts {
                 }
             }
 
-            /*
-            
-            foreach (var bp in grid._bodyparts) {
-                sensor.AddObservation(bp.transform.localPosition);
-            }
-
-            foreach (var cube in grid.cubes) {
-                sensor.AddObservation(cube.transform.localPosition);
-            }
-            */
+            AddReward( -1f / MaxStep); // punish to try to make the snake approach move towards the food faster
         }
 
         public override void Heuristic(in ActionBuffers actionsOut) {
@@ -70,13 +62,24 @@ namespace Snake_game.Scripts {
 
         public void Score() {
             score++;
-            SetReward(grid._bodyparts.Count);
+            AddReward(grid._bodyparts.Count); // snake body parts
             EndEpisode();
         }
 
         public void Punish() {
             score = 0;
-            SetReward(-grid._bodyparts.Count);
+            var count = grid._bodyparts.Count; // snake body parts
+            AddReward(-count);
+            
+            // AddReward(-1f / (count+1));
+            
+            // if(count > 0) AddReward(-1f / count);
+            // else AddReward(1f);
+            EndEpisode();
+        }
+        
+        private void PunishSeverely() {
+            AddReward(-2*grid._bodyparts.Count);
             EndEpisode();
         }
 
@@ -84,8 +87,11 @@ namespace Snake_game.Scripts {
             if (other.CompareTag("Wall")) {
                 foreach (var b in grid._bodyparts) { Destroy(b.gameObject); }
                 grid._bodyparts.Clear();
-                Punish();
+                if (other.transform == grid.cubes[0].transform) PunishSeverely(); // if snake head hits its first body, punish more severely
+                else Punish();
             }
         }
+
+        
     }
 }

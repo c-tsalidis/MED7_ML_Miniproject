@@ -2562,7 +2562,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: a4372ea018d9e4b0e9243c6637830dbc, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: Snake
   TeamId: 0
   m_UseChildSensors: 1
@@ -2963,7 +2963,7 @@ MonoBehaviour:
   snakeHead: {fileID: 3566021994372542192}
   food: {fileID: 3566021995430386090}
   bodyPartPrefab: {fileID: 7598522206606828966, guid: 30a35ad614a634186a7183396690934d, type: 3}
-  timeBetweenFrames: 0.5
+  timeBetweenFrames: 0.2
   snakeMaterial: {fileID: 2100000, guid: 6a1d567ee188d47efb11cf30afc7b779, type: 2}
   gridCubeMaterial: {fileID: 2100000, guid: 4c4288ef46b6f4184b08d63f0d183413, type: 2}
   xIndex: 0
