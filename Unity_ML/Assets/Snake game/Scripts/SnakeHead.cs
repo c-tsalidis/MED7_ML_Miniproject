@@ -4,6 +4,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Snake_game.Scripts {
     public class SnakeHead : Agent {
@@ -14,8 +15,13 @@ namespace Snake_game.Scripts {
 
         public int score = 0;
         public int direction = 0;
+
+        [SerializeField] private Text scoreText;
     
-        public override void OnEpisodeBegin() => grid.SetFoodPosition();
+        public override void OnEpisodeBegin() {
+            scoreText.text = score.ToString();
+            grid.SetFoodPosition();
+        }
 
         // public override void OnActionReceived(ActionBuffers actions) => grid.SetSnakeHeadPosition(actions.DiscreteActions[0]); // set the direction of the snake
         
@@ -37,16 +43,10 @@ namespace Snake_game.Scripts {
             sensor.AddObservation(foodPos.z);
             
             // add observation to each body part
-            for (int i = 0; i < grid.cubes.Length; i++) {
-                if (grid._bodyparts.Count-1 >= i) {
-                    var pos = grid._bodyparts[i].transform.localPosition;
-                    sensor.AddObservation(pos.x);
-                    sensor.AddObservation(pos.z);
-                }
-                else {
-                    // sensor.AddObservation(0f); // x
-                    // sensor.AddObservation(0f); // z
-                }
+            foreach (var bp in grid._bodyparts) {
+                var pos = bp.transform.localPosition;
+                sensor.AddObservation(pos.x);
+                sensor.AddObservation(pos.z);
             }
 
             // AddReward( -1f / MaxStep); // punish to try to make the snake approach move towards the food faster
