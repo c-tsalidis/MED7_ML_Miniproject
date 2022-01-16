@@ -50,6 +50,7 @@ namespace Snake_game.Scripts {
             }
 
             // AddReward( -1f / MaxStep); // punish to try to make the snake approach move towards the food faster
+            // TODO --> Maybe consider adding more reward if the distance to the food is smaller each frame?
         }
 
         public override void Heuristic(in ActionBuffers actionsOut) {
@@ -62,43 +63,27 @@ namespace Snake_game.Scripts {
 
         public void Score() {
             score++;
-            AddReward(grid._bodyparts.Count); // snake body parts
+            AddReward(1);
             EndEpisode();
         }
 
-        public void Punish() {
-            // if the snake happens to find itself in the situation where the food and body part are in the same spot,
-            // then it should avoid its body more than it should go for the food --> Therefore:
-            // we need to set the punish slightly higher than the reward
-            score = 0;
-            var count = grid._bodyparts.Count; // snake body parts
-            AddReward(-count-1);
-            
-            // AddReward(-1f / (count+1));
-            
-            // if(count > 0) AddReward(-1f / count);
-            // else AddReward(1f);
-            EndEpisode();
-        }
-
-        private void PunishSeverely() {
-            AddReward(-2*grid._bodyparts.Count);
+        private void Punish() {
+            AddReward(-1); 
             EndEpisode();
         }
 
         public void WonGame() {
-            Score();
+            AddReward(1);
+            grid.ClearBodyParts();
+            score = 0;
+            EndEpisode();
         }
 
         private void OnTriggerEnter(Collider other) {
-            if (other.CompareTag("Wall")) {
-                foreach (var b in grid._bodyparts) { Destroy(b.gameObject); }
-                grid._bodyparts.Clear();
-                if (other.transform == grid.cubes[0].transform) PunishSeverely(); // if snake head hits its first body, punish more severely
-                else Punish();
+            if (other.CompareTag("Wall")) { // wall is actually also snake body part
+                grid.ClearBodyParts();
+                Punish();
             }
         }
-
-        
     }
 }

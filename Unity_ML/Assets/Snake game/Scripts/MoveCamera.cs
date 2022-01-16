@@ -7,9 +7,12 @@ namespace Snake_game.Scripts {
         private Camera cam;
         [SerializeField] private Transform toFollow;
         [SerializeField] private float scale, speed, moveStep;
+        [SerializeField] private bool isHeuristic;
+        
         private void Start() => cam = GetComponent<Camera>();
 
         private void Update() {
+            if(isHeuristic) return;
             var x = Input.GetAxisRaw("Horizontal") * speed;
             var z = Input.GetAxisRaw("Vertical") * speed;
             // toFollow.position += new Vector3(x, 0, z);
