@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 
 namespace Snake_game.Scripts {
     public class Grid : MonoBehaviour {
-        public bool isTraining = true;
         public int gridEdgeSize = 5;
         [SerializeField] private SnakeHead snakeHead;
         [SerializeField] private Food food;
@@ -36,7 +35,7 @@ namespace Snake_game.Scripts {
 
             // SetFoodPosition();
             // if (timeBetweenFrames > 0 && !isTraining) {
-            if (!isTraining) {
+            if (!snakeHead.isTraining) {
                 StartCoroutine(WaitBetweenFrames());
             }
         }
@@ -59,12 +58,6 @@ namespace Snake_game.Scripts {
         public void SetFoodPosition() {
             bool foundFreeSpotForFood = false;
             while (!foundFreeSpotForFood) {
-                if (_bodyparts.Count == cubes.Length - 1) {
-                    foundFreeSpotForFood = true; // won the game, so stop the while loop
-                    snakeHead.WonGame();
-                    break;
-                }
-
                 var randomCubeIndex = Random.Range(0, cubes.Length);
                 var cube = cubes[randomCubeIndex];
 
@@ -85,7 +78,7 @@ namespace Snake_game.Scripts {
 
         public void SetSnakeHeadPosition(int direction) {
             // if (!timeFinished && timeBetweenFrames > 0) return;
-            if (!isTraining)
+            if (!snakeHead.isTraining)
                 if (!timeFinished && timeBetweenFrames > 0)
                     return;
 
@@ -132,7 +125,7 @@ namespace Snake_game.Scripts {
             if (food.gridIndex == cubeIndex) {
                 // get the maximum snake body parts and only instantiate if it's below the maximum body parts allowed (config yaml file for curriculum learning)
                 var maxBodyParts = Academy.Instance.EnvironmentParameters.GetWithDefault("max_snake_body_count", 0.0f);
-                if ((_bodyparts.Count + 1) <= maxBodyParts || !isTraining) {
+                if ((_bodyparts.Count + 1) <= maxBodyParts || !snakeHead.isTraining) {
                     var bodyPart = Instantiate(bodyPartPrefab, originalPosition, Quaternion.identity);
                     bodyPart.transform.SetParent(transform);
                     int pos = 0;
@@ -149,7 +142,11 @@ namespace Snake_game.Scripts {
                     _bodyparts.Add(bodyPart.GetComponent<GridCube>());
                 }
                 // make sure that the agent gets a reward for getting the food
-                snakeHead.Score();
+                if (_bodyparts.Count == cubes.Length - 1) {
+                    print("Won the game!!");
+                    snakeHead.WonGame();
+                }
+                else snakeHead.Score();
             }
         }
 

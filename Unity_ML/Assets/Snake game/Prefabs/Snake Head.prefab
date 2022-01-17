@@ -162,7 +162,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 100
   grid: {fileID: 0}
   _food: {fileID: 0}
   moveSpeed: 0
@@ -171,6 +171,7 @@ MonoBehaviour:
   score: 0
   direction: 0
   scoreText: {fileID: 0}
+  isTraining: 0
 --- !u!114 &1045348792935994496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +201,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 100
 --- !u!114 &9132658457881619732
 MonoBehaviour:
   m_ObjectHideFlags: 0

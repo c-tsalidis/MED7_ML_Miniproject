@@ -1,6 +1,7 @@
 using System;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
+using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,7 +18,16 @@ namespace Snake_game.Scripts {
         public int direction = 0;
 
         [SerializeField] private Text scoreText;
-    
+        public bool isTraining = true;
+
+        private BehaviorParameters behaviorParameters;
+
+        private float distanceToFood, previousDistanceToFood;
+
+        private void Awake() {
+            behaviorParameters = GetComponent<BehaviorParameters>();
+        }
+
         public override void OnEpisodeBegin() {
             scoreText.text = score.ToString();
             grid.SetFoodPosition();
@@ -28,7 +38,7 @@ namespace Snake_game.Scripts {
         // set the direction of the snake
         public override void OnActionReceived(ActionBuffers actions) {
             direction = actions.DiscreteActions[0];
-            if(grid.isTraining) grid.SetSnakeHeadPosition(actions.DiscreteActions[0]); // set the direction of the snake
+            if(isTraining) grid.SetSnakeHeadPosition(actions.DiscreteActions[0]); // set the direction of the snake
         }
 
         public override void CollectObservations(VectorSensor sensor) {
@@ -42,6 +52,8 @@ namespace Snake_game.Scripts {
             sensor.AddObservation(foodPos.x);
             sensor.AddObservation(foodPos.z);
             
+            
+            
             // add observation to each body part
             foreach (var bp in grid._bodyparts) {
                 var pos = bp.transform.localPosition;
@@ -50,7 +62,11 @@ namespace Snake_game.Scripts {
             }
 
             // AddReward( -1f / MaxStep); // punish to try to make the snake approach move towards the food faster
+            AddReward( -0.01f); // punish to try to make the snake approach move towards the food faster
             // TODO --> Maybe consider adding more reward if the distance to the food is smaller each frame?
+            distanceToFood = Vector3.Distance(headPos, foodPos);
+            if (distanceToFood < previousDistanceToFood) AddReward(0.01f);
+            previousDistanceToFood = distanceToFood;
         }
 
         public override void Heuristic(in ActionBuffers actionsOut) {
@@ -63,12 +79,15 @@ namespace Snake_game.Scripts {
 
         public void Score() {
             score++;
-            AddReward(1);
+            AddReward(1f);
+            // update the vector observation size based on the grid body parts count
+            behaviorParameters.BrainParameters.VectorObservationSize = 4 + grid._bodyparts.Count; // 4 --> One for each x and z of headPos and foodPos
             EndEpisode();
         }
 
         private void Punish() {
-            AddReward(-1); 
+            score = 0;
+            AddReward(-1);
             EndEpisode();
         }
 

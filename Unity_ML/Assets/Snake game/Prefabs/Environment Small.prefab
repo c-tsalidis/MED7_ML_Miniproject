@@ -2819,7 +2819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec373ce660d674d519a8a6bf6bc324d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTraining: 1
+  isTraining: 0
   gridEdgeSize: 5
   snakeHead: {fileID: 3566021994372542192}
   food: {fileID: 3566021995430386090}
